@@ -1,0 +1,74 @@
+
+
+\def\qtr{Spring 2021}
+\def\due{Wednesday, April 21 at 11:59pm}
+\def\latedue{Saturday, April 24 at 11:59pm}
+\def\piazza{\url{https://edstem.org/us/courses/5279/discussion/}}
+\def\psetnum{1}
+
+%%% Change the following flag to toggle between questions or solutions
+\ifdefined\solutions {} \else \def\solutions{1} \fi
+
+\input{macros.tex}
+
+\def\shownotes{1}  %set 1 to show author notes
+\ifnum\shownotes=1
+\newcommand{\authnote}[2]{[#1: #2]}
+\else
+\newcommand{\authnote}[2]{}
+\fi
+
+\newcommand{\tnote}[1]{{\color{blue}\authnote{TM}{#1}}}
+\newcommand{\mnote}[1]{{\color{purple}\authnote{MZ}{#1}}}
+\newcommand{\hnote}[1]{{\color{purple}\authnote{HJ}{#1}}}
+\newcommand{\fk}[1]{{\color{purple}{[FK:#1]}}}
+\newcommand{\notes}[1]{{\color{blue} Note:} \textit{#1} \newline}
+
+
+\begin{document}
+
+\pagestyle{myheadings} \markboth{}{CS229 Problem Set \#\psetnum}
+
+\ifnum\solutions=1{
+{\huge\noindent CS 229, \qtr\\
+Problem Set \#\psetnum \;Solutions}\\\\
+YOUR NAME HERE (\texttt{YOUR SUNET HERE})
+} \else {\huge
+\noindent CS 229, \qtr\\
+Problem Set \#\psetnum
+} \fi
+
+\ruleskip
+
+{\bf Due {\due } on Gradescope.}
+
+\medskip
+
+\input{00-instructions/00-main}
+
+\begin{enumerate}[wide, labelwidth=!, labelindent=0pt]
+
+\clearpage
+\input{linearclass/00-main}
+
+\clearpage
+\input{poisson/00-main}
+
+\clearpage
+\input{glmconvexity/00-main}
+
+\clearpage
+\input{featuremaps/00-main}
+
+\clearpage
+\input{posonly/00-main}
+
+\clearpage
+\item \points{1} {\bf Feedback} How are things going so far? Any comments on the course content or structure? What can the course staff do to help improve your experience? (Any answer will earn you the point -- feel free to just say ``No comments". But we'd love to hear from you!)
+
+\end{enumerate}
+
+
+
+
+\end{document}
