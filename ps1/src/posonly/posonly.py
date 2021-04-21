@@ -40,7 +40,7 @@ def main(train_path, valid_path, test_path, save_path):
 
     x_test, y_test = util.load_dataset(test_path, label_col='t', add_intercept=True)
 
-    util.plot(x_test, y_test, model_true.theta, 'plot_5a')
+    util.plot(x_test, y_test, model_true.theta, 'plot_5a.png')
 
     # Make sure to save predicted probabilities to output_path_true using np.savetxt()
     np.savetxt(output_path_true, model_true.predict(x_test))
@@ -52,7 +52,7 @@ def main(train_path, valid_path, test_path, save_path):
     model_naive.fit(x_train, y_train)
 
     x_test, y_test = util.load_dataset(test_path, label_col='y', add_intercept=True)
-    util.plot(x_test, y_test, model_naive.theta, 'plot_5b')
+    util.plot(x_test, y_test, model_naive.theta, 'plot_5b.png')
 
     # Make sure to save predicted probabilities to output_path_naive using np.savetxt()
     np.savetxt(output_path_naive, model_naive.predict(x_test))
@@ -66,7 +66,7 @@ def main(train_path, valid_path, test_path, save_path):
 
     x_test, y_test = util.load_dataset(test_path, label_col='y', add_intercept=True)
 
-    util.plot(x_test, y_test, model_naive.theta, 'plot_5f', correction=alpha)
+    util.plot(x_test, y_test, model_naive.theta, 'plot_5f.png', correction=alpha)
 
     np.savetxt(output_path_adjusted, model_naive.predict(x_test)*alpha)
 
