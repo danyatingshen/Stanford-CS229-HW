@@ -86,4 +86,5 @@ def plot(x, y, theta, save_path, correction=1.0):
     # Add labels and save to disk
     plt.xlabel('x1')
     plt.ylabel('x2')
+    plt.show() ###REMOVE###
     plt.savefig(save_path)

@@ -27,8 +27,6 @@ def main(lr, train_path, eval_path, save_path):
     pr.predict(x_eval)
     np.savetxt(save_path, pr.predict(x_eval))
 
-    #util.plot(x_train, y_train, pr.theta, 'plot.png', correction=1.0)
-
     plt.figure()
     plt.scatter(y_eval, pr.predict(x_eval))
     plt.show()
