@@ -27,14 +27,18 @@ def main(lr, train_path, eval_path, save_path):
     pr.predict(x_eval)
     np.savetxt(save_path, pr.predict(x_eval))
 
+    #Plot actual vs predicted
     plt.figure()
     plt.scatter(y_eval, pr.predict(x_eval))
+    plt.xlabel("actual")
+    plt.ylabel("predicted")
     plt.show()
 
+    #Plot error
     plot_x = np.linspace(0, len(pr.verbose), len(pr.verbose))
     plt.figure()
     plt.plot(plot_x, pr.verbose)
-    plt.show()
+    #plt.show()
 
 
 # *** END CODE HERE ***
