@@ -16,8 +16,32 @@ def main(lr, train_path, eval_path, save_path):
 
     # *** START CODE HERE ***
     # Fit a Poisson Regression model
+
+    theta_init = np.zeros((x_train.shape[1], 1))
+    pr = PoissonRegression(step_size=lr, theta_0=theta_init, verbose=True)
+    pr.fit(x_train, y_train.reshape(-1, 1))
+
     # Run on the validation set, and use np.savetxt to save outputs to save_path
-    # *** END CODE HERE ***
+    x_eval, y_eval = util.load_dataset(eval_path, add_intercept=True)
+
+    pr.predict(x_eval)
+    np.savetxt(save_path, pr.predict(x_eval))
+
+    #Plot actual vs predicted
+    plt.figure()
+    plt.scatter(y_eval, pr.predict(x_eval))
+    plt.xlabel("actual")
+    plt.ylabel("predicted")
+    plt.show()
+
+    #Plot error
+    plot_x = np.linspace(0, len(pr.verbose), len(pr.verbose))
+    plt.figure()
+    plt.plot(plot_x, pr.verbose)
+    #plt.show()
+
+
+# *** END CODE HERE ***
 
 
 class PoissonRegression:
@@ -53,6 +77,23 @@ class PoissonRegression:
             y: Training example labels. Shape (n_examples,).
         """
         # *** START CODE HERE ***
+
+        verbose_temp = [] if self.verbose else self.verbose
+
+        theta_old = np.copy(self.theta) + self.eps
+
+        curr_iter = 0
+        while curr_iter <= self.max_iter and np.max(np.abs(self.theta - theta_old)) >= self.eps:
+            theta_old = np.copy(self.theta)
+
+            self.theta = self.theta + self.step_size * x.T @ (y - self.predict(x))
+
+            if self.verbose:
+                verbose_temp.append(1/2 * np.sum(np.power(y - self.predict(x), 2)))
+
+            curr_iter += 1
+
+        self.verbose = verbose_temp
         # *** END CODE HERE ***
 
     def predict(self, x):
@@ -65,6 +106,7 @@ class PoissonRegression:
             Floating-point prediction for each input, shape (n_examples,).
         """
         # *** START CODE HERE ***
+        return np.exp(x @ self.theta)
         # *** END CODE HERE ***
 
 if __name__ == '__main__':
