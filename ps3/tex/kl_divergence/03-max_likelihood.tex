@@ -1,0 +1,11 @@
+\item\subquestionpoints{5} \textbf{KL and maximum likelihood.}
+
+Consider a density estimation problem, and suppose we are given a training set $\{\xsi; i=1,\ldots, \nexp\}$.  Let the empirical distribution be $\hat{P}(x) = \frac{1}{\nexp}\sum_{i=1}^{\nexp} 1\{\xsi=x\}$. ($\hat{P}$ is just the uniform distribution over the training set; i.e., sampling from the empirical distribution is the same as picking a random example from the training set.)
+
+Suppose we have some family of distributions $P_\theta$ parameterized by $\theta$.
+(If you like, think of $P_\theta(x)$ as an alternative notation for $P(x;\theta)$.)
+Prove that finding the maximum likelihood estimate for the parameter $\theta$ is equivalent to finding $P_{\theta}$ with minimal KL divergence from $\hat{P}$. I.e. prove:
+\[
+\arg\min_\theta \KL(\hat{P}\|P_\theta)
+= \arg\max_\theta \sum_{i=1}^\nexp \log P_\theta(\xsi)
+\]
