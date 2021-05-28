@@ -1,0 +1,5 @@
+\item \subquestionpoints{8} \textbf{Laplace source.}
+
+For this sub-question, we assume sources are distributed according to a standard Laplace distribution, i.e $s_i \sim \mathcal{L}(0,1)$. The Laplace distribution $\mathcal{L}(0,1)$ has PDF $f_{\mathcal{L}}(s) = \frac{1}{2}\exp\left(-|s| \right)$. With this assumption, derive the update rule for a single example to solve ICA using gradient ascent\footnote{In our implementation, we {\bf anneal} the learning rate $\alpha$ (slowly decreased it over time) to speed up learning. In addition to using the variable learning rate to speed up convergence, one thing that we also do is choose a random permutation of the training data, and running stochastic
+gradient ascent visiting the training data in that order. Each of the specified learning rates was then used for one full pass through the data.}, in the form
+$$ W := W + \alpha \left(\ldots\right)$$ 
