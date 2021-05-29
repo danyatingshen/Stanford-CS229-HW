@@ -28,7 +28,9 @@ def init_centroids(num_clusters, image):
     """
 
     # *** START YOUR CODE ***
-    # raise NotImplementedError('init_centroids function not implemented')
+    rand_indx_1 = np.random.randint(image.shape[0], size=num_clusters)
+    rand_indx_2 = np.random.randint(image.shape[1], size=num_clusters)
+    centroids_init = image[rand_indx_1, rand_indx_2, :]
     # *** END YOUR CODE ***
 
     return centroids_init
@@ -56,12 +58,30 @@ def update_centroids(centroids, image, max_iter=30, print_every=10):
     """
 
     # *** START YOUR CODE ***
-    # raise NotImplementedError('update_centroids function not implemented')
-        # Usually expected to converge long before `max_iter` iterations
-                # Initialize `dist` vector to keep track of distance to every centroid
-                # Loop over all centroids and store distances in `dist`
-                # Find closest centroid and update `new_centroids`
-        # Update `new_centroids`
+    temp_image = image.reshape(-1, 3)
+
+    dist = [0]*centroids.shape[0]
+    c = [0]*temp_image.shape[0]
+    c_old = c.copy()
+
+    new_centroids = np.copy(centroids)
+    new_centroids = new_centroids.astype(float)
+
+    for z in range(max_iter):
+        for i in range(temp_image.shape[0]):
+            pixel = temp_image[i, :]
+            for j, centroid in enumerate(new_centroids):
+                dist[j] = sum(np.subtract(pixel.astype(float), centroid ) ** 2)
+            c[i] = dist.index(min(dist))
+
+        for j, centroid in enumerate(new_centroids):
+            new_centroids[j, :] = (temp_image[np.array(c) == j]).mean(axis=0).astype(float)
+
+        if np.array_equal(np.asarray(c_old), np.asarray(c)):
+            print("CONVERGENCE IN: " + str(z) + " ITERATIONS")
+            break
+        c_old = c.copy()
+
     # *** END YOUR CODE ***
 
     return new_centroids
@@ -86,17 +106,23 @@ def update_image(image, centroids):
     """
 
     # *** START YOUR CODE ***
-    # raise NotImplementedError('update_image function not implemented')
-            # Initialize `dist` vector to keep track of distance to every centroid
-            # Loop over all centroids and store distances in `dist`
-            # Find closest centroid and update pixel value in `image`
-    # *** END YOUR CODE ***
+    original_shape = image.shape
+    new_image = image.reshape(-1, 3).copy()
 
-    return image
+    dist = [0]*centroids.shape[0]
+
+    for i in range(new_image.shape[0]):
+        pixel = new_image[i, :]
+        for j, centroid in enumerate(centroids):
+            dist[j] = sum(np.subtract(pixel.astype(float), centroid) ** 2)
+        new_image[i, :] = centroids[dist.index(min(dist)), :].astype(int)
+
+    new_image = new_image.reshape(original_shape[0], original_shape[1], original_shape[2])
+    # *** END YOUR CODE ***
+    return new_image
 
 
 def main(args):
-
     # Setup
     max_iter = args.max_iter
     print_every = args.print_every
@@ -106,7 +132,6 @@ def main(args):
     figure_idx = 0
 
     # Load small image
-
     image = np.copy(mpimg.imread(image_path_small))
     # Note: If you see error "TypeError: Image data of dtype object cannot be converted to float"
     # Comment off mpimg.imread() and uncomment the next line to use cv2.imread() instead
